@@ -12,32 +12,18 @@ export default function MainPage(){
     console.log(banner)
     return(
         <>
-        <Header>
-                <p>CINEFLEX</p>
-            </Header>
+            
             <Main>
                 <p>Selecione o filme</p>
                 <Content>
-                    {banner.map((movie)=> <MovieBanner key={movie.id} poster={movie.posterURL} title={movie.title}/>)}
+                    {banner.map((movie)=> <MovieBanner key={movie.id} poster={movie.posterURL} title={movie.title} id={movie.id}/>)}
                 </Content>
             </Main>
         </>
     )
 }
 
-const Header = styled.div`
-    height: 67px;
-    width: 100%;
-    background-color:#C3CFD9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    p{
-        font-size: 34px;
-        color:#e8833a;
-    }
-`
 const Main = styled.div`
     display: flex;
     flex-direction: column;

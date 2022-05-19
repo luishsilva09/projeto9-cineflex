@@ -1,15 +1,27 @@
 import styled from 'styled-components';
-export default function MovieBanner({poster, title}){
+import axios from 'axios';
+import { Link, useParams } from "react-router-dom";
+import MoviePage from './MoviePage'
+import React from 'react';
+
+
+
+export default function MovieBanner({poster, title, id}){
+    
+    
+    
     return(
-        <>
-            <Banner onClick={() => console.log(title)}>
+        <>  <Link to={`/filme/${id}`}>
+            <Banner >
                 <img  src={poster} alt={title}></img>
             </Banner>
+            </Link>
         </>
     )
 }
 
 const Banner = styled.div`
+    cursor: pointer;
     height: 209px;
     width: 145px;
     background: #FFFFFF;
