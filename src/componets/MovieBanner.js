@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import axios from 'axios';
-import { Link, useParams } from "react-router-dom";
-import MoviePage from './MoviePage'
+import { Link } from "react-router-dom";
+
 import React from 'react';
 
 
