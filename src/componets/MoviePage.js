@@ -2,6 +2,7 @@ import { Link ,useParams } from "react-router-dom";
 import styled from 'styled-components';
 import axios from "axios";
 import React from "react";
+import Load from "../assets/load.gif"
 function ContentMovie({ data}) {
    function SeceaoMovie({day}){
        
@@ -38,7 +39,7 @@ export default function MoviePage() {
         <>
             <Content>
                 <span>Selecione o horário</span>
-                {load ? <ContentMovie key={movieData.id} data={movieData} /> : <p>load</p>}
+                {load ? <ContentMovie key={movieData.id} data={movieData} /> : <img src={Load}/>}
             </Content>
             <Footer>
                 <Poster>
@@ -81,7 +82,7 @@ const Secoes = styled.div`
         margin-left: 8px;
 
     &:hover{
-        opacity: 50%;
+        filter: brightness(120%);
     }
     }
 `

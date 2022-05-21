@@ -11,15 +11,16 @@ export default function MainPage(){
     }, [])
     console.log(banner)
     return(
-        <>
-            
+        
+            <>
             <Main>
                 <p>Selecione o filme</p>
                 <Content>
                     {banner.map((movie)=> <MovieBanner key={movie.id} poster={movie.posterURL} title={movie.title} id={movie.id}/>)}
                 </Content>
             </Main>
-        </>
+            </>
+        
     )
 }
 
@@ -41,5 +42,7 @@ const Main = styled.div`
 const Content = styled.div`
         width: 350px;
         display: flex;
+        justify-content: space-around;
         flex-wrap: wrap;
+        
 `

@@ -1,7 +1,7 @@
 import '../../assets/reset.css'
 import '../../assets/style.css'
 import styled from 'styled-components';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
 import MainPage from '../MainPage';
 import MoviePage from '../MoviePage';
 import SessaoPage from '../SessaoPage';
@@ -12,9 +12,14 @@ export default function App() {
     return (
         <>
             <BrowserRouter>
+            
+            <Link to="/" >
             <Header>
                 <p>CINEFLEX</p>
             </Header>
+            
+            </Link>
+            
                 <Routes>
                     <Route path="/" element={<MainPage />}/>
                     <Route path="/filme/:idMovie" element={<MoviePage />}/>
@@ -31,6 +36,7 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+   
 
     p{
         font-size: 34px;

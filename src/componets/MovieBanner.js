@@ -29,8 +29,11 @@ const Banner = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 30px;
     margin-bottom:11px;
+    
+    &:hover{
+        filter: brightness(120%);
+    }
 
     img{
         width: 129px;
