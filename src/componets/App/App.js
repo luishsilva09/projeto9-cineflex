@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
 import MainPage from '../MainPage';
 import MoviePage from '../MoviePage';
 import SessaoPage from '../SessaoPage';
+import SucessPage from '../SucessPage';
 
 export default function App() {
 
@@ -13,17 +14,18 @@ export default function App() {
         <>
             <BrowserRouter>
             
-            <Link to="/" >
+            
             <Header>
                 <p>CINEFLEX</p>
             </Header>
             
-            </Link>
+            
             
                 <Routes>
                     <Route path="/" element={<MainPage />}/>
                     <Route path="/filme/:idMovie" element={<MoviePage />}/>
                     <Route path="/sessao/:idSessao" element={<SessaoPage />} />
+                    <Route path="/sucesso" element={<SucessPage />} />
                 </Routes>
             </BrowserRouter>
         </>

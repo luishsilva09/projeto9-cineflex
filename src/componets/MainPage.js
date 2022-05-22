@@ -9,7 +9,7 @@ export default function MainPage(){
         const promise = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
         promise.then((props) => setBanner(props.data))
     }, [])
-    console.log(banner)
+    
     return(
         
             <>

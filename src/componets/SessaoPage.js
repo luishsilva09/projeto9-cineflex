@@ -1,31 +1,38 @@
 import axios from "axios"
 import React from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import styled from 'styled-components';
 import Load from "../assets/load.gif"
-
-function SeatRender({ data }) {
+import SucessPage from "./SucessPage"
+let assentos = []
+let assentosName = []
+function SeatRender({ data, Confirm }) {
     const [select, setSelect] = React.useState("#C3CFD9")
     const [selecionado, setSelecionado] = React.useState(false)
-    function seleciona(element){
-        
-        if(selecionado == false){
+   
+    function seleciona(element, id, name) {
+
+        if (selecionado == false) {
             setSelect("#8DD7CF;")
             setSelecionado(true)
-        }else{
+            assentos.push(id)
+            assentosName.push(name)
+        } else {
             setSelect("#C3CFD9")
             setSelecionado(false)
+            assentos = assentos.filter((e) => e != id ? id : "")
+            assentosName = assentosName.filter((e) => e != name ? name : "")
         }
     }
     if (data.isAvailable == false) {
         return (
-            <Seat color="#FBE192" >
+            <Seat color="#FBE192" onClick={() => alert("Esse assento não está disponível")}>
                 {data.name}
             </Seat>
         )
     }
     return (
-        <Seat color={select} onClick={(element) => seleciona(element)}>
+        <Seat color={select} onClick={(element) => seleciona(element, data.id, data.name)}>
             {data.name}
         </Seat>
     )
@@ -39,23 +46,51 @@ export default function SessaoPage() {
     const [nomeComprador, setNomeComprador] = React.useState("")
     const [cpf, setCpf] = React.useState("")
 
+    let navigate = useNavigate();
+
     React.useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
         promise.then(function (sessao) {
             setSessaoData(sessao.data)
             setLoad(true)
 
+
         })
 
     }, [])
     function Confirm(event) {
         event.preventDefault();
-        console.log(cpf)
-        console.log(nomeComprador)
+        let config = {
+
+            ids: assentos,
+            name: nomeComprador,
+            cpf: cpf
+
+        }
+        let SucessData = {
+            ids: assentos,
+            name: nomeComprador,
+            cpf: cpf,
+            movieName:sessaoData.movie.title,
+            movieDay:sessaoData.day.weekday,
+            movieTime:sessaoData.name,
+            seats:assentosName
+        }
+        const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many',config)
+        promise.then(navigate("/sucesso", { state: SucessData}))
         setCpf("")
         setNomeComprador("")
+        assentosName = []
+        assentos = []
+        
+
+
     }
 
+    function sucesso() {
+        navigate("/sucesso")
+        console.log("Oi")
+    }
     return (
         <>
             {load ?
@@ -63,21 +98,23 @@ export default function SessaoPage() {
                     <Content>
                         <span>Selecione o(s) assento(s) </span>
                     </Content>
+
                     <Seats>
                         {sessaoData.seats.map((seat) => <SeatRender data={seat} />)}
-                        <span>
-                            <Seat color="#8DD7CF"></Seat>
-                            <Seat color="#C3CFD9"></Seat>
-                            <Seat color="#FBE192"></Seat>
-                        </span>
+                        <Legend>
+                            <div><Seat color="#8DD7CF"></Seat><h5>Selecionado</h5></div>
+                            <div><Seat color="#C3CFD9"></Seat><h5>Disponível</h5></div>
+                            <div><Seat color="#FBE192"></Seat><h5>Indisponível</h5></div>
+                        </Legend>
                     </Seats>
                     <Form onSubmit={Confirm}>
                         <p>Nome do comprador:</p>
                         <input type="text" placeholder="Digite seu nome..." value={nomeComprador} onChange={(e) => setNomeComprador(e.target.value)} />
                         <p>CPF do comprador</p>
                         <input type="number" placeholder="Digite seu CPF..." value={cpf} onChange={(e) => setCpf(e.target.value)} />
-                        <button type="submit">Reservar assento(s)</button>
+                        <button type="submit" >Reservar assento(s)</button>
                     </Form>
+
                     <Footer>
                         <Poster>
                             <img src={sessaoData.movie.posterURL} />
@@ -91,11 +128,27 @@ export default function SessaoPage() {
         </>
     )
 }
+const Legend = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    h5{
+        font-size: 13px;
+        color:#4E5A65;
+    }
+    div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 42px;
+    margin-bottom: 130px;
 
     p{
         width: 100%;
@@ -171,6 +224,8 @@ const Seats = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     cursor: pointer;
+
+    
     
     span{
         width: 100%;
@@ -191,6 +246,10 @@ const Seat = styled.div`
     align-items: center;
     justify-content: center;
     font-size: 11px;
+
+    &:hover{
+            filter: brightness(110%);
+    }
     
 `
 const NotAvailable = styled.div`
