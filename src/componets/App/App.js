@@ -1,7 +1,7 @@
 import '../../assets/reset.css';
-import '../../assets/style.css';
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route, Link,useNavigate} from "react-router-dom";
+import GlobalStyle from '../globalStyles';
 import MainPage from '../MainPage';
 import MoviePage from '../MoviePage';
 import SessaoPage from '../SessaoPage';
@@ -12,6 +12,7 @@ export default function App() {
     
     return (
         <>
+        <GlobalStyle/>
             <BrowserRouter>
                 
                 <Routes>
