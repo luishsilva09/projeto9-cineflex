@@ -1,12 +1,13 @@
-import React from "react"
-import { Link, useLocation } from "react-router-dom"
-import styled from "styled-components"
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import styled from "styled-components";
+import Header from './App/Header';
 
 export default function SucessPage() {
-    const { state } = useLocation()
-    console.log(state)
+    const { state } = useLocation();
     return (
         <Container>
+            <Header />
             <Content>
                 <span>Pedido feito <br />com sucesso!</span>
             </Content>
@@ -30,10 +31,10 @@ export default function SucessPage() {
                 </Link>
             </Footer>
         </Container>
-    )
-}
+    );
+};
 const Container = styled.div`
-padding-left:30px ;
+    
     h1{
         font-size: 24px;
         color:#293845;
@@ -81,6 +82,7 @@ const Content = styled.div`
 `
 const Post = styled.div`
 margin-bottom: 50px;
+margin-left: 30px;
 
 `
 const Footer = styled.div`

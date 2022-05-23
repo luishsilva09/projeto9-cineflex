@@ -1,45 +1,47 @@
-import { Link ,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import axios from "axios";
 import React from "react";
-import Load from "../assets/load.gif"
-function ContentMovie({ data}) {
-   function SeceaoMovie({day}){
-       
-       return(
-           <>
-            <p>{day.weekday} - {day.date}</p>
-            {day.showtimes.map((time, index) => <Link to={`/sessao/${time.id}`}><button key={index} id={time.id} >{time.name}</button></Link>)}
-           </>
-       )
-   }
+import Load from "../assets/load.gif";
+import Header from './App/Header';
+
+function ContentMovie({ data }) {
+    function SeceaoMovie({ day }) {
+        return (
+            <>
+                <p>{day.weekday} - {day.date}</p>
+                {day.showtimes.map((time, index) => <Link to={`/sessao/${time.id}`}><button key={index} id={time.id} >{time.name}</button></Link>)}
+            </>
+        );
+    };
     return (
         <>
             <Secoes>
-                {data.days.map((day,index) => <SeceaoMovie key={index} day={day}  />)}  
+                {data.days.map((day, index) => <SeceaoMovie key={index} day={day} />)}
             </Secoes>
         </>
-    )
-}
+    );
+};
 
 export default function MoviePage() {
 
     const { idMovie } = useParams();
-    const [movieData, setMovieData] = React.useState([])
-    const [load, setLoad] = React.useState(false)
+    const [movieData, setMovieData] = React.useState([]);
+    const [load, setLoad] = React.useState(false);
 
     React.useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idMovie}/showtimes`)
         promise.then(function (movie) {
-            setMovieData(movie.data)
-            setLoad(true)
-        })
-    }, [])
+            setMovieData(movie.data);
+            setLoad(true);
+        });
+    }, []);
     return (
         <>
+        <Header />
             <Content>
                 <span>Selecione o horário</span>
-                {load ? <ContentMovie key={movieData.id} data={movieData} /> : <img src={Load}/>}
+                {load ? <ContentMovie key={movieData.id} data={movieData} /> : <img src={Load} />}
             </Content>
             <Footer>
                 <Poster>
@@ -48,8 +50,8 @@ export default function MoviePage() {
                 <p>{movieData.title}</p>
             </Footer>
         </>
-    )
-}
+    );
+};
 const Content = styled.div`
     margin-bottom: 117px;
     span{

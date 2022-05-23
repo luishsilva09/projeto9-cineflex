@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom';
-import App from './componets/App/App'
-function Index(){
-    return(
-       <>
-       <App />
-       </>
+import App from './componets/App/App';
+function Index() {
+    return (
+        <>
+            <App />
+        </>
     );
 };
 

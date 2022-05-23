@@ -1,23 +1,20 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-
 import React from 'react';
 
 
-
-export default function MovieBanner({poster, title, id}){
-    
-    
-    
-    return(
-        <>  <Link to={`/filme/${id}`}>
+export default function MovieBanner({ poster, title, id }) {
+    return (
+        <>  
+        
+        <Link to={`/filme/${id}`}>
             <Banner >
-                <img  src={poster} alt={title}></img>
+                <img src={poster} alt={title}></img>
             </Banner>
-            </Link>
+        </Link>
         </>
-    )
-}
+    );
+};
 
 const Banner = styled.div`
     cursor: pointer;
